@@ -2,22 +2,23 @@ package hiber.service;
 
 import hiber.dao.UserDao;
 import hiber.model.User;
-import org.hibernate.query.Query;
+import hiber.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Service
 public class UserServiceImp implements UserService {
 
+
+   private final UserDao userDao;
+
    @Autowired
-   private UserDao userDao;
-   @PersistenceContext
-   private EntityManager entityManager;
+   public UserServiceImp(UserDao userDao) {
+      this.userDao = userDao;
+   }
 
    @Transactional
    @Override
@@ -33,11 +34,7 @@ public class UserServiceImp implements UserService {
 
    @Transactional(readOnly = true)
    @Override
-   public User getUserByCarModelAndSeries(String model, int series) {
-      Query query = (Query) entityManager.createQuery(
-              "SELECT u FROM User u WHERE u.car.model = :model AND u.car.series = :series");
-      query.setParameter("model", model);
-      query.setParameter("series", series);
-      return (User) query.getSingleResult();
+   public User getUserByModelAndSeries(String model, int series) {
+      return userDao.getUserByModelAndSeries(model, series);
    }
 }

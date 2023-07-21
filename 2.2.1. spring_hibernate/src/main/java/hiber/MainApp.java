@@ -15,7 +15,7 @@ public class MainApp {
               new AnnotationConfigApplicationContext(AppConfig.class);
 
      UserService userService = context.getBean(UserService.class);
-     System.out.println((userService.getUserByCarModelAndSeries("Car2 model",234)).toString());
+     System.out.println((userService.getUserByModelAndSeries("Car2 model",234)).toString());
    /*   User user1 = new User("User1", "Lastname1", "user1@mail.ru");
       Car car1 = new Car("Car1 Model", 123);
       user1.setCar(car1);
